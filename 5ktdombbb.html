@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Банковская карта</title>
+<style>
+.card-thumbnail {
+  display: inline-block;
+  width: 300px;
+  height: 220px;
+  border: 1px solid #ccc;
+  background-color: #f0f0f0;
+  margin-left: 20px;
+}
+</style>
+</head>
+<body>
+<form id="cardForm">
+  <label for="bank">Название банка:</label>
+  <input type="text" id="bank" name="bank" required><br><br>
+  
+  <label for="paymentSystem">Тип платежной системы:</label>
+  <input type="text" id="paymentSystem" name="paymentSystem" required><br><br>
+  
+  <label for="cardNumber">Номер карты:</label>
+  <input type="text" id="cardNumber" name="cardNumber" pattern="[0-9]{16}" required><br><br>
+  
+  <label for="cardHolderName">Имя держателя карты:</label>
+  <input type="text" id="cardHolderName" name="cardHolderName" required><br><br>
+  
+  <label for="expiryDate">Месяц и год окончания карты:</label>
+  <input type="text" id="expiryDate" name="expiryDate" placeholder="MM/YYYY" pattern="(0[1-9]|1[0-2])\/[0-9]{4}" required><br><br>
+  
+  <input type="submit" value="Отправить">
+</form>
+
+<div class="card-thumbnail" id="cardThumbnail"></div>
+
+<table id="cardTable" border="1">
+  <thead>
+    <tr>
+      <th>Название банка</th>
+      <th>Тип платежной системы</th>
+      <th>Номер карты</th>
+      <th>Имя держателя</th>
+      <th>Срок действия</th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+
+<script>
+    const cardForm = document.getElementById('cardForm');
+    const cardThumbnail = document.getElementById('cardThumbnail');
+    const cardTable = document.getElementById('cardTable').getElementsByTagName('tbody')[0];
+    
+    cardForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+      
+      const bank = document.getElementById('bank').value;
+      const paymentSystem = document.getElementById('paymentSystem').value;
+      const cardNumber = document.getElementById('cardNumber').value;
+      const cardHolderName = document.getElementById('cardHolderName').value;
+      const expiryDate = document.getElementById('expiryDate').value;
+      
+      const newRow = cardTable.insertRow();
+      newRow.innerHTML = `
+        <td>${bank}</td>
+        <td>${paymentSystem}</td>
+        <td>${cardNumber}</td>
+        <td>${cardHolderName}</td>
+        <td>${expiryDate}</td>
+      `;
+      
+      cardForm.reset();
+      
+      // Обновление миниатюры карты
+      cardThumbnail.innerHTML = `
+        <div>
+          <p><strong>Название банка:</strong> ${bank}</p>
+          <p><strong>Тип платежной системы:</strong> ${paymentSystem}</p>
+          <p><strong>Номер карты:</strong> ${cardNumber}</p>
+          <p><strong>Имя держателя:</strong> ${cardHolderName}</p>
+          <p><strong>Срок действия:</strong> ${expiryDate}</p>
+        </div>
+      `;
+    });
+    </script>
+</body>
+</html>
+
+
+
+
+    
